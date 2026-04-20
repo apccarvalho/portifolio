@@ -1,6 +1,13 @@
-# 🌐 Andréia Carvalho | Portfolio
+# 🌐 Meu Portfolio
 
 Um portfólio pessoal moderno e responsivo, desenvolvido com uma estética **Cyberpunk/Synthwave**. O projeto destaca minha transição de carreira da gestão comercial para **Cloud Computing**, **Infraestrutura** e **Desenvolvimento**.
+
+## Acesso
+
+O deploy desse portifólio foi feito via GitHub Pages, e está disponível em:
+
+https://apccarvalho.github.io/portifolio/
+
 
 ## 🚀 Tecnologias Utilizadas
 
