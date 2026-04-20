@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Andréia Carvalho | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:        #0d0014;
+      --bg2:       #130020;
+      --pink:      #ff2d78;
+      --cyan:      #00f5ff;
+      --purple:    #b14aed;
+      --lavender:  #c77dff;
+      --yellow:    #ffe156;
+      --white:     #f0e6ff;
+      --muted:     #8a7a9b;
+      --card-bg:   rgba(177,74,237,0.08);
+      --card-border: rgba(0,245,255,0.18);
+      --glow-pink: 0 0 18px rgba(255,45,120,0.55);
+      --glow-cyan: 0 0 18px rgba(0,245,255,0.55);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        linear-gradient(rgba(0,245,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── SCANLINES ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(13,0,20,0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,245,255,0.12);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--lavender);
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); text-shadow: var(--glow-cyan); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 32px 80px;
+      overflow: hidden;
+    }
+
+    .hero-sun {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 480px; height: 240px;
+      background: linear-gradient(180deg, #ffe156 0%, #ff2d78 40%, transparent 100%);
+      border-radius: 480px 480px 0 0;
+      opacity: 0.18;
+      filter: blur(2px);
+    }
+
+    .hero-sun::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 18px,
+        var(--bg) 18px,
+        var(--bg) 22px
+      );
+      border-radius: 480px 480px 0 0;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 30%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(177,74,237,0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      letter-spacing: 6px;
+      line-height: 0.95;
+      background: linear-gradient(135deg, var(--white) 0%, var(--lavender) 50%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeUp 0.8s 0.1s ease both;
+      position: relative; z-index: 2;
+    }
+
+    .hero-subtitle {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 1px;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-subtitle span { color: var(--cyan); }
+
+    .hero-badges {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 36px;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 2px;
+      border: 1px solid;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .badge:hover { transform: translateY(-2px); }
+    .badge-pink  { border-color: var(--pink);   color: var(--pink);   }
+    .badge-cyan  { border-color: var(--cyan);   color: var(--cyan);   }
+    .badge-purple{ border-color: var(--purple); color: var(--purple); }
+    .badge-pink:hover  { box-shadow: var(--glow-pink); }
+    .badge-cyan:hover  { box-shadow: var(--glow-cyan); }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+
+    .btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+    }
+    .btn:hover { transform: translateY(-3px); }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--pink), var(--purple));
+      color: var(--white);
+      border: none;
+      box-shadow: 0 4px 24px rgba(255,45,120,0.35);
+    }
+    .btn-primary:hover { box-shadow: 0 8px 32px rgba(255,45,120,0.55); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+    }
+    .btn-outline:hover { box-shadow: var(--glow-cyan); }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative; z-index: 2;
+      padding: 100px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 4px;
+      background: linear-gradient(90deg, var(--white), var(--lavender));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 60px;
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      margin-bottom: 80px;
+      opacity: 0.3;
+    }
+
+    /* ── PROJETOS GRID ── */
+    #loading-repos {
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 60px 0;
+    }
+
+    .loading-dot { animation: blink 1s infinite; }
+    .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 28px;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      text-decoration: none;
+      color: inherit;
+      display: flex; flex-direction: column; gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--pink), var(--cyan));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0,245,255,0.4);
+      box-shadow: 0 12px 40px rgba(0,245,255,0.12);
+    }
+    .project-card:hover::before { transform: scaleX(1); }
+
+    .project-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .project-meta {
+      display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    }
+
+    .project-lang {
+      display: flex; align-items: center; gap: 6px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--lavender);
+    }
+
+    .lang-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      display: inline-block;
+    }
+
+    .project-stars {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--yellow);
+    }
+
+    .project-arrow {
+      position: absolute; top: 28px; right: 28px;
+      font-size: 1.1rem;
+      color: var(--muted);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .project-card:hover .project-arrow { color: var(--cyan); transform: translate(3px, -3px); }
+
+    /* ── INFRA GRID ── */
+    .infra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .infra-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(177,74,237,0.2);
+      border-radius: 4px;
+      padding: 28px 24px;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .infra-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(177,74,237,0.5);
+    }
+
+    .infra-icon {
+      font-size: 2rem;
+      margin-bottom: 14px;
+    }
+
+    .infra-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--lavender);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .infra-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .infra-tag {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+    .tag-active  { background: rgba(0,245,255,0.1); color: var(--cyan); border: 1px solid rgba(0,245,255,0.3); }
+    .tag-learning{ background: rgba(255,225,86,0.1); color: var(--yellow); border: 1px solid rgba(255,225,86,0.3); }
+
+    /* ── SOBRE ── */
+    .sobre-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .sobre-left {
+      position: sticky; top: 120px;
+    }
+
+    .avatar-frame {
+      width: 220px; height: 220px;
+      border-radius: 4px;
+      border: 2px solid var(--purple);
+      box-shadow: 0 0 40px rgba(177,74,237,0.3), inset 0 0 30px rgba(177,74,237,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+      background: var(--bg2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar-frame::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0,245,255,0.08), transparent 60%);
+    }
+
+    .sobre-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 3px;
+      color: var(--white);
+      margin-top: 24px;
+    }
+
+    .sobre-role {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      margin-top: 6px;
+    }
+
+    .sobre-social {
+      display: flex; gap: 14px; margin-top: 24px; flex-wrap: wrap;
+    }
+
+    .social-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border: 1px solid rgba(0,245,255,0.3);
+      color: var(--cyan);
+      text-decoration: none;
+      border-radius: 2px;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .social-link:hover { border-color: var(--cyan); box-shadow: var(--glow-cyan); background: rgba(0,245,255,0.07); }
+
+    .sobre-right { display: flex; flex-direction: column; gap: 28px; }
+
+    .sobre-block {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 28px;
+    }
+
+    .sobre-block-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 14px;
+    }
+
+    .sobre-block p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--white);
+    }
+
+    .skills-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+    .chip {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      padding: 6px 14px;
+      border-radius: 2px;
+      background: rgba(177,74,237,0.12);
+      border: 1px solid rgba(177,74,237,0.3);
+      color: var(--lavender);
+    }
+
+    /* ── CONTATO ── */
+    #contato {
+      text-align: center;
+    }
+
+    .contato-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contato-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .contato-links {
+      display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+    }
+
+    .contato-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 4px;
+      padding: 28px 36px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      min-width: 160px;
+    }
+    .contato-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0,245,255,0.4);
+      box-shadow: 0 12px 40px rgba(0,245,255,0.12);
+    }
+    .contato-card-icon { font-size: 1.8rem; }
+    .contato-card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 40px;
+      border-top: 1px solid rgba(0,245,255,0.08);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+    }
+
+    footer span { color: var(--pink); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    .fade-in-section {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in-section.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* ── TRAJETÓRIA / TIMELINE ── */
+    #trajetoria { padding-top: 0; }
+
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--pink), var(--purple), var(--cyan));
+      opacity: 0.4;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0 0 44px 28px;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -30px; top: 6px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--purple);
+      background: var(--bg);
+      box-shadow: 0 0 10px rgba(177,74,237,0.6);
+      transition: box-shadow 0.3s, border-color 0.3s;
+    }
+
+    .timeline-item:hover .timeline-dot {
+      border-color: var(--cyan);
+      box-shadow: 0 0 16px rgba(0,245,255,0.7);
+    }
+
+    .timeline-period {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      color: var(--pink);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .timeline-role {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .timeline-company {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      margin: 4px 0 10px;
+    }
+
+    .timeline-skills {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+
+    .tskill {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 2px;
+      border: 1px solid rgba(199,125,255,0.3);
+      color: var(--lavender);
+      background: rgba(199,125,255,0.07);
+    }
+
+    /* ── SOFTSKILLS SHOWCASE ── */
+    .softskill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .softskill-card {
+      background: linear-gradient(135deg, rgba(255,45,120,0.06), rgba(177,74,237,0.08));
+      border: 1px solid rgba(255,45,120,0.18);
+      border-radius: 4px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .softskill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(255,45,120,0.15);
+    }
+
+    .softskill-icon { font-size: 2rem; margin-bottom: 12px; }
+
+    .softskill-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--pink);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .softskill-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { gap: 14px; }
+      .nav-links a { font-size: 0.65rem; letter-spacing: 1px; }
+      section { padding: 80px 20px; }
+      .sobre-layout { grid-template-columns: 1fr; }
+      .sobre-left { position: static; }
+      #trajetoria > div > div[style*="grid"] { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">APC</div>
+    <ul class="nav-links">
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#infra">Infra & Labs</a></li>
+      <li><a href="#trajetoria">Trajetória</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-sun"></div>
+    <p class="hero-tag">// portfólio pessoal</p>
+    <h1>Andréia<br>Carvalho</h1>
+    <p class="hero-subtitle">
+      Analista de Suporte Técnico &nbsp;·&nbsp;
+      <span>Cloud Computing</span> &nbsp;·&nbsp; Redes & Infra
+    </p>
+    <div class="hero-badges">
+      <span class="badge badge-pink">🥋 Faixa Preta 1º Dan</span>
+      <span class="badge badge-cyan">☁️ Cloud Support</span>
+      <span class="badge badge-purple">💻 Programação</span>
+      <span class="badge badge-cyan">📊 Gestão Comercial</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#projetos" class="btn btn-primary">Ver Projetos</a>
+      <a href="https://github.com/apccarvalho" target="_blank" class="btn btn-outline">GitHub ↗</a>
+    </div>
+  </section>
+
+  <!-- PROJETOS -->
+  <section id="projetos" class="fade-in-section">
+    <p class="section-label">// 01 — repositórios públicos</p>
+    <h2 class="section-title">Projetos</h2>
+    <div id="loading-repos">
+      <span>Carregando repositórios</span>
+      <span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span>
+    </div>
+    <div id="projects-grid" class="projects-grid" style="display:none;"></div>
+  </section>
+  <div class="section-divider"></div>
+
+  <!-- INFRA & LABS -->
+  <section id="infra" class="fade-in-section">
+    <p class="section-label">// 02 — servidores, redes & cloud</p>
+    <h2 class="section-title">Infra & Labs</h2>
+    <div class="infra-grid">
+      <div class="infra-card"><div class="infra-icon">🌐</div><div class="infra-title">Apache & Nginx</div><div class="infra-desc">Instalação e configuração de servidores web — virtual hosts, HTTPS e tuning básico.</div><span class="infra-tag tag-active">Concluído</span></div>
+      <div class="infra-card"><div class="infra-icon">📡</div><div class="infra-title">DHCP</div><div class="infra-desc">Configuração de servidor DHCP para gerenciamento dinâmico de IPs em redes locais.</div><span class="infra-tag tag-active">Concluído</span></div>
+      <div class="infra-card"><div class="infra-icon">💻</div><div class="infra-title">Programação</div><div class="infra-desc">Desenvolvimento de scripts para automação de tarefas e suporte técnico.</div><span class="infra-tag tag-learning">Em andamento</span></div>
+      <div class="infra-card"><div class="infra-icon">🖥️</div><div class="infra-title">Máquinas Virtuais</div><div class="infra-desc">Criação e gerenciamento de VMs para laboratórios de redes e testes de serviços.</div><span class="infra-tag tag-active">Concluído</span></div>
+      <div class="infra-card"><div class="infra-icon">☁️</div><div class="infra-title">Cloud & Backup</div><div class="infra-desc">Serviços de computação em nuvem e estratégias de backup — suporte cloud.</div><span class="infra-tag tag-learning">Em andamento</span></div>
+      <div class="infra-card"><div class="infra-icon">🗄️</div><div class="infra-title">DNS & ownCloud</div><div class="infra-desc">Resolução de nomes (DNS) e implantação do ownCloud como storage self-hosted.</div><span class="infra-tag tag-active">Conhecimento</span></div>
+    </div>
+  </section>
+  <div class="section-divider"></div>
+
+  <!-- TRAJETÓRIA - ordem corrigida: Analista de Suporte → Analista de Compras → Gerente Comercial → Vendedora -->
+  <section id="trajetoria" class="fade-in-section">
+    <p class="section-label">// 03 — experiência & jornada</p>
+    <h2 class="section-title">Trajetória</h2>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;">
+      <!-- TIMELINE (ordem nova) -->
+      <div>
+        <p style="font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:32px;">Histórico profissional</p>
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Atual</div><div class="timeline-role">Analista de Suporte Técnico</div><div class="timeline-company">// Cloud Computing & Infra</div><div class="timeline-skills"><span class="tskill">Troubleshooting</span><span class="tskill">Cloud</span><span class="tskill">Suporte técnico</span><span class="tskill">Comunicação</span></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Experiência anterior</div><div class="timeline-role">Analista de Compras</div><div class="timeline-company">// Supply chain & fornecedores</div><div class="timeline-skills"><span class="tskill">Negociação</span><span class="tskill">Análise de dados</span><span class="tskill">Tomada de decisão</span><span class="tskill">Fornecedores</span></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Experiência anterior</div><div class="timeline-role">Gerente Comercial</div><div class="timeline-company">// Gestão de vendas & equipes</div><div class="timeline-skills"><span class="tskill">Liderança</span><span class="tskill">Estratégia</span><span class="tskill">Gestão de equipe</span><span class="tskill">Negociação</span></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-period">Experiência anterior</div><div class="timeline-role">Vendedora</div><div class="timeline-company">// Relacionamento & resultados</div><div class="timeline-skills"><span class="tskill">Persuasão</span><span class="tskill">Empatia</span><span class="tskill">Metas</span><span class="tskill">Relacionamento</span></div></div>
+        </div>
+      </div>
+      <!-- SOFTSKILLS - características alinhadas às funções -->
+      <div>
+        <p style="font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:32px;">Competências construídas em cada fase</p>
+        <div class="softskill-grid">
+          <div class="softskill-card"><div class="softskill-icon">🛠️</div><div class="softskill-name">Resolução Técnica</div><div class="softskill-desc">Como Analista de Suporte, desenvolvi raciocínio lógico e troubleshooting ágil para ambientes cloud.</div></div>
+          <div class="softskill-card"><div class="softskill-icon">📊</div><div class="softskill-name">Análise & Negociação</div><div class="softskill-desc">Na posição de Analista de Compras, refinei análise de dados, negociação com fornecedores e tomada de decisão estratégica.</div></div>
+          <div class="softskill-card"><div class="softskill-icon">👥</div><div class="softskill-name">Liderança Comercial</div><div class="softskill-desc">Como Gerente Comercial liderei equipes, defini metas e estruturei estratégias de vendas com foco em resultado.</div></div>
+          <div class="softskill-card"><div class="softskill-icon">🤝</div><div class="softskill-name">Relacionamento</div><div class="softskill-desc">Na experiência como Vendedora, construí empatia, comunicação persuasiva e foco no cliente.</div></div>
+          <div class="softskill-card"><div class="softskill-icon">🔄</div><div class="softskill-name">Adaptabilidade</div><div class="softskill-desc">Transitei do comércio à TI — aprendo rápido e me reinvento com propósito em cada nova função.</div></div>
+          <div class="softskill-card"><div class="softskill-icon">🎯</div><div class="softskill-name">Visão Sistêmica</div><div class="softskill-desc">Unindo compras, vendas e tecnologia, enxergo o negócio de forma integrada para soluções mais completas.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="section-divider"></div>
+
+  <!-- SOBRE -->
+  <section id="sobre" class="fade-in-section">
+    <p class="section-label">// 04 — quem sou eu</p>
+    <h2 class="section-title">Sobre</h2>
+    <div class="sobre-layout">
+      <div class="sobre-left"><div class="avatar-frame">🥋</div><div class="sobre-name">Andréia Carvalho</div><div class="sobre-role">// Analista de Suporte · Cloud</div><div class="sobre-social"><a href="https://github.com/apccarvalho" target="_blank" class="social-link">GitHub</a><a href="https://www.linkedin.com/in/andréia-carvalho-28272124b" target="_blank" class="social-link">LinkedIn</a></div></div>
+      <div class="sobre-right">
+        <div class="sobre-block"><div class="sobre-block-title">Profissional</div><p>Atuo como <strong style="color:var(--cyan)">Analista de Suporte Técnico</strong> em uma empresa de computação em nuvem — mas minha trajetória é muito mais ampla. Fui <strong style="color:var(--lavender)">Analista de Compras, Gerente Comercial e Vendedora</strong>. Essa bagagem me dá uma visão única: entendo de pessoas, processos e negócio além da parte técnica. Atualmente, estou direcionando meu aprendizado para <strong style="color:var(--lavender)">programação</strong>, buscando unir minha experiência em infraestrutura com desenvolvimento de soluções.</p></div>
+        <div class="sobre-block"><div class="sobre-block-title">🥋 Taekwondo</div><p>Sou <strong style="color:var(--pink)">Faixa Preta 1º Dan de Taekwondo</strong>, o que me ensinou disciplina, persistência e foco — valores que levo para a área de tecnologia. Já realizei uma <em>mini palestra</em> no trabalho sobre a arte marcial, mostrando que comunicar ideias é tão importante quanto praticá-las.</p></div>
+        <div class="sobre-block"><div class="sobre-block-title">Tecnologias em Aprendizado (Programação)</div><div class="skills-chips"><span class="chip">PHP</span><span class="chip">Java</span><span class="chip">Spring Boot</span><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">HTML</span><span class="chip">CSS</span></div></div>
+        <div class="sobre-block"><div class="sobre-block-title">Soft Skills</div><div class="skills-chips"><span class="chip">Comunicação</span><span class="chip">Liderança</span><span class="chip">Negociação</span><span class="chip">Trabalho em equipe</span><span class="chip">Didática</span><span class="chip">Aprendizado contínuo</span><span class="chip">Apresentações</span><span class="chip">Visão de negócio</span><span class="chip">Adaptabilidade</span><span class="chip">Gestão de equipes</span><span class="chip">Resolução de problemas</span></div></div>
+        <div class="sobre-block"><div class="sobre-block-title">Conhecimentos Técnicos</div><div class="skills-chips"><span class="chip">Apache / Nginx</span><span class="chip">DHCP</span><span class="chip">DNS</span><span class="chip">Programação</span><span class="chip">ownCloud</span><span class="chip">VMs</span><span class="chip">Cloud Computing</span><span class="chip">Backup</span><span class="chip">Redes</span></div></div>
+      </div>
+    </div>
+  </section>
+  <div class="section-divider"></div>
+
+  <!-- CONTATO -->
+  <section id="contato" class="fade-in-section">
+    <p class="section-label">// 05 — vamos conversar</p>
+    <h2 class="section-title">Contato</h2>
+    <div class="contato-inner"><p class="contato-desc">Adoraria trocar idéias sobre tecnologia, infra, cloud ou taekwondo. Me encontre nas redes abaixo!</p><div class="contato-links"><a href="https://github.com/apccarvalho" target="_blank" class="contato-card"><div class="contato-card-icon">🐙</div><div class="contato-card-label">GitHub</div></a><a href="https://www.linkedin.com/in/andréia-carvalho-28272124b" target="_blank" class="contato-card"><div class="contato-card-icon">💼</div><div class="contato-card-label">LinkedIn</div></a></div></div>
+  </section>
+
+  <footer><p>Feito com <span>♥</span> por Andréia Carvalho &nbsp;·&nbsp; <span>apccarvalho</span> &nbsp;·&nbsp; 2025</p></footer>
+
+  <script>
+    async function loadRepos() {
+      const loadingEl = document.getElementById('loading-repos');
+      const gridEl    = document.getElementById('projects-grid');
+      const langColors = { Python: '#3572A5', JavaScript: '#f1e05a', TypeScript: '#2b7489', HTML: '#e34c26', CSS: '#563d7c', Shell: '#89e051', Java: '#b07219', C: '#555555', 'C++': '#f34b7d', Ruby: '#701516', PHP: '#4F5D95', Go: '#00ADD8', Rust: '#dea584', Kotlin: '#F18E33', Swift: '#ffac45', Jupyter: '#DA5B0B', default: '#8b949e' };
+      try {
+        const res  = await fetch('https://api.github.com/users/apccarvalho/repos?type=public&per_page=50&sort=updated');
+        const repos = await res.json();
+        if (!Array.isArray(repos) || repos.length === 0) { loadingEl.textContent = 'Nenhum repositório público encontrado.'; return; }
+        loadingEl.style.display = 'none';
+        gridEl.style.display    = 'grid';
+        repos.forEach(repo => {
+          const color = langColors[repo.language] || langColors.default;
+          const desc  = repo.description || 'Sem descrição.';
+          const stars = repo.stargazers_count > 0 ? `<span class="project-stars">★ ${repo.stargazers_count}</span>` : '';
+          const lang  = repo.language ? `<span class="project-lang"><span class="lang-dot" style="background:${color}"></span>${repo.language}</span>` : '';
+          const card = document.createElement('a');
+          card.href   = repo.html_url; card.target = '_blank'; card.rel = 'noopener noreferrer';
+          card.className = 'project-card';
+          card.innerHTML = `<span class="project-arrow">↗</span><div class="project-name">${repo.name}</div><div class="project-desc">${desc}</div><div class="project-meta">${lang}${stars}</div>`;
+          gridEl.appendChild(card);
+        });
+      } catch (err) {
+        loadingEl.innerHTML = `<p style="color:var(--muted); font-family:'Space Mono',monospace; font-size:0.82rem;">Não foi possível carregar os repositórios automaticamente.<br><a href="https://github.com/apccarvalho?tab=repositories" target="_blank" style="color:var(--cyan); text-decoration:none;">Ver repositórios no GitHub ↗</a></p>`;
+      }
+    }
+    loadRepos();
+    const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
